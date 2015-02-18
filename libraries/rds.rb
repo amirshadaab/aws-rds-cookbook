@@ -91,6 +91,14 @@ module Overclock
           end
         end
       end
+      
+       def create_instance_from_snapshot(id = new_resource.id)
+        if @instance = rds.db_snapshots[id].restore_instance({})
+          while (instance.status != 'available') do
+            sleep 1
+          end
+        end
+      end
 
       def update_instance(id = new_resource.id)
         # placeholder for update instance 
